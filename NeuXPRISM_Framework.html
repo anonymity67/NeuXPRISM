@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuXPRISM Framework</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #080c14;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #ccc;
+  min-height: 100vh;
+  padding: 20px 16px 16px;
+  overflow-x: auto;
+}
+.title-section { text-align: center; margin-bottom: 20px; }
+h1 {
+  font-size: 30px; letter-spacing: 0.18em;
+  color: #ede5d5; font-weight: normal;
+  text-shadow: 0 0 40px #3b6fa033;
+}
+.subtitle {
+  font-size: 9.5px; letter-spacing: 0.16em;
+  color: #445566; margin-top: 5px;
+}
+.title-rule {
+  width: 120px; height: 1px;
+  background: linear-gradient(90deg, transparent, #3b6fa066, transparent);
+  margin: 10px auto 0;
+}
+.container {
+  position: relative;
+  width: 1020px; height: 530px;
+}
+.box {
+  position: absolute;
+  border-radius: 6px;
+  padding: 11px 12px;
+}
+.input-layer {
+  left: 0; top: 110px;
+  width: 168px; height: 305px;
+  border: 1px solid #2a4f70;
+  background: #0a1422;
+}
+.neucube-wrap {
+  left: 194px; top: 72px;
+  width: 290px;
+  border: 1px solid #1e3a5a;
+  background: radial-gradient(ellipse at center, #0d1828 0%, #080c14 70%);
+  box-shadow: 0 0 30px #1a3a6a22 inset;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 8px 10px 12px;
+}
+.goal-a {
+  left: 635px; top: 18px;
+  width: 210px; height: 138px;
+  border: 1px solid #7a2828;
+  background: #120505;
+}
+.goal-b {
+  left: 635px; top: 196px;
+  width: 210px; height: 132px;
+  border: 1px solid #7a5a00;
+  background: #120e00;
+}
+.goal-c {
+  left: 635px; top: 374px;
+  width: 210px; height: 132px;
+  border: 1px solid #1a5a28;
+  background: #050e08;
+}
+.rfinal {
+  left: 858px; top: 108px;
+  width: 152px; height: 308px;
+  border: 1px solid #5a3090;
+  background: #0b0618;
+  box-shadow: 0 0 20px #5a309022 inset;
+}
+.ray-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 1020px; height: 530px;
+  pointer-events: none;
+}
+.section-label { font-size: 12px; font-weight: bold; letter-spacing: 0.1em; margin-bottom: 2px; }
+.section-sub   { font-size: 9px; margin-bottom: 9px; letter-spacing: 0.06em; }
+.vg-label      { font-size: 9.5px; font-weight: bold; letter-spacing: 0.1em; margin-top: 7px; margin-bottom: 3px; }
+.vg-item       { font-size: 9.5px; padding-left: 8px; line-height: 1.7; }
+.legend        { margin-top: 9px; border-top: 1px solid #1a2a3a; padding-top: 7px; }
+.legend-item   { display: flex; align-items: center; gap: 6px; font-size: 9.5px; margin-bottom: 3px; }
+.legend-dot    { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+.goal-title    { font-size: 11px; font-weight: bold; letter-spacing: 0.12em; margin-bottom: 1px; }
+.goal-sub      { font-size: 9.5px; margin-bottom: 6px; }
+.goal-body     { font-size: 9.5px; line-height: 1.65; color: #bbb; margin-bottom: 5px;
+                 border-bottom-width: 1px; border-bottom-style: solid; padding-bottom: 5px; }
+.goal-out      { font-size: 9.5px; line-height: 1.75; }
+.lineage {
+  text-align: center; border-top: 1px solid #141e2a;
+  margin-top: 16px; padding-top: 11px;
+  font-size: 9.5px; color: #3a4a5a;
+  letter-spacing: 0.07em; width: 1020px;
+}
+</style>
+</head>
+<body>
+
+<div class="title-section">
+  <h1>NeuXPRISM</h1>
+  <div class="subtitle">
+    Neural &nbsp; eXplainable &nbsp; Probabilistic &nbsp; Risk &nbsp; Inference &nbsp; Spatio-temporal &nbsp; Model
+  </div>
+  <div class="title-rule"></div>
+</div>
+
+<div class="container">
+
+  <!-- SVG RAYS LAYER -->
+  <svg class="ray-svg" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="3.5" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="glow-sm" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="2" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="glow-soft" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="6" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <!-- Input beam gradient -->
+      <linearGradient id="beam-in" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#8899aa" stop-opacity="0.1"/>
+        <stop offset="100%" stop-color="#aabbcc" stop-opacity="0.7"/>
+      </linearGradient>
+      <!-- Ray gradients -->
+      <linearGradient id="grad-a" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#e07878" stop-opacity="0.0"/>
+        <stop offset="100%" stop-color="#e07878" stop-opacity="0.22"/>
+      </linearGradient>
+      <linearGradient id="grad-b" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#e0b840" stop-opacity="0.0"/>
+        <stop offset="100%" stop-color="#e0b840" stop-opacity="0.22"/>
+      </linearGradient>
+      <linearGradient id="grad-c" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#60d080" stop-opacity="0.0"/>
+        <stop offset="100%" stop-color="#60d080" stop-opacity="0.22"/>
+      </linearGradient>
+    </defs>
+
+    <!-- INPUT BEAM — white ray of light, filter-free layered glow for mobile -->
+    <!-- Wide outer halo -->
+    <rect x="165" y="254" width="32" height="22" rx="11" fill="white" fill-opacity="0.04"/>
+    <rect x="165" y="257" width="32" height="16" rx="8"  fill="white" fill-opacity="0.07"/>
+    <rect x="165" y="259" width="32" height="12" rx="6"  fill="white" fill-opacity="0.10"/>
+    <rect x="165" y="261" width="32" height="8"  rx="4"  fill="white" fill-opacity="0.18"/>
+    <!-- Core beam -->
+    <rect x="165" y="263" width="32" height="4"  rx="2"  fill="white" fill-opacity="0.55"/>
+    <rect x="165" y="264" width="32" height="2"  rx="1"  fill="white" fill-opacity="0.92"/>
+    <!-- Source dot at Input Layer right edge -->
+    <circle cx="168" cy="265" r="6"  fill="white" fill-opacity="0.12"/>
+    <circle cx="168" cy="265" r="3.5" fill="white" fill-opacity="0.55"/>
+    <circle cx="168" cy="265" r="1.5" fill="white" fill-opacity="1.0"/>
+    <!-- Glass contact flare where beam hits NeuCube -->
+    <circle cx="194" cy="265" r="11" fill="white" fill-opacity="0.08"/>
+    <circle cx="194" cy="265" r="7"  fill="white" fill-opacity="0.14"/>
+    <circle cx="194" cy="265" r="4"  fill="white" fill-opacity="0.45"/>
+    <circle cx="194" cy="265" r="2"  fill="white" fill-opacity="0.95"/>
+    <!-- PRISM EXIT GLOW -->
+    <circle cx="483" cy="265" r="10" fill="white" fill-opacity="0.12" filter="url(#glow-soft)"/>
+    <circle cx="483" cy="265" r="4"  fill="white" fill-opacity="0.4"  filter="url(#glow)"/>
+
+    <!-- RAY A (red — Goal A) outer aura -->
+    <polygon points="483,265 635,18 635,156"
+             fill="#e07878" fill-opacity="0.06"/>
+    <!-- RAY A inner beam -->
+    <polygon points="483,265 635,62 635,112"
+             fill="#e07878" fill-opacity="0.14"/>
+    <!-- RAY A core line -->
+    <line x1="483" y1="265" x2="635" y2="87"
+          stroke="#e07878" stroke-width="2.5" stroke-opacity="0.75" filter="url(#glow)"/>
+
+    <!-- RAY B (gold — Goal B) outer aura -->
+    <polygon points="483,265 635,196 635,328"
+             fill="#e0b840" fill-opacity="0.06"/>
+    <!-- RAY B inner beam -->
+    <polygon points="483,265 635,228 635,296"
+             fill="#e0b840" fill-opacity="0.14"/>
+    <!-- RAY B core line -->
+    <line x1="483" y1="265" x2="635" y2="262"
+          stroke="#e0b840" stroke-width="2.5" stroke-opacity="0.75" filter="url(#glow)"/>
+
+    <!-- RAY C (green — Goal C) outer aura -->
+    <polygon points="483,265 635,374 635,506"
+             fill="#60d080" fill-opacity="0.06"/>
+    <!-- RAY C inner beam -->
+    <polygon points="483,265 635,406 635,474"
+             fill="#60d080" fill-opacity="0.14"/>
+    <!-- RAY C core line -->
+    <line x1="483" y1="265" x2="635" y2="440"
+          stroke="#60d080" stroke-width="2.5" stroke-opacity="0.75" filter="url(#glow)"/>
+
+    <!-- GOAL A → R_FINAL (thin red converging line) -->
+    <line x1="845" y1="87"  x2="860" y2="210"
+          stroke="#e07878" stroke-width="1.2" stroke-opacity="0.45" filter="url(#glow-sm)"/>
+    <!-- GOAL B → R_FINAL (thin gold straight) -->
+    <line x1="845" y1="262" x2="860" y2="265"
+          stroke="#e0b840" stroke-width="1.2" stroke-opacity="0.45" filter="url(#glow-sm)"/>
+    <!-- GOAL C → R_FINAL (thin green converging line) -->
+    <line x1="845" y1="440" x2="860" y2="320"
+          stroke="#60d080" stroke-width="1.2" stroke-opacity="0.45" filter="url(#glow-sm)"/>
+
+    <!-- R_FINAL entry glow -->
+    <circle cx="860" cy="265" r="6" fill="#c090f0" fill-opacity="0.25" filter="url(#glow)"/>
+
+  </svg>
+
+  <!-- INPUT LAYER -->
+  <div class="box input-layer">
+    <div class="section-label" style="color:#7eb8e2">INPUT LAYER</div>
+    <div class="section-sub" style="color:#4a7a9a">9 Variables</div>
+
+    <div class="vg-label" style="color:#7eb8e2;margin-top:0">MISSION</div>
+    <div class="vg-item" style="color:#8ab8d8">&#9675; Vehicle Heritage</div>
+    <div class="vg-item" style="color:#8ab8d8">&#9675; Orbit Type</div>
+    <div class="vg-item" style="color:#8ab8d8">&#9675; Cost (M USD)</div>
+    <div class="vg-item" style="color:#8ab8d8">&#9675; Phase</div>
+    <div class="vg-item" style="color:#8ab8d8">&#9675; Cause</div>
+
+    <div class="vg-label" style="color:#5ed4a0">GEOGRAPHIC</div>
+    <div class="vg-item" style="color:#8adabb">&#9675; Latitude</div>
+    <div class="vg-item" style="color:#8adabb">&#9675; Coastal Proximity</div>
+
+    <div class="vg-label" style="color:#c87ae0">SPACE WEATHER</div>
+    <div class="vg-item" style="color:#d8a8ea">&#9675; Ap Index</div>
+    <div class="vg-item" style="color:#d8a8ea">&#9675; AE Index</div>
+
+
+  </div>
+
+  <!-- NEUCUBE -->
+  <div class="box neucube-wrap">
+    <canvas id="neucube" width="260" height="225"
+            style="background:transparent;display:block;margin:0 auto"></canvas>
+    <div style="text-align:center;margin-top:5px">
+      <div style="color:#e0d8c8;font-size:14px;letter-spacing:0.06em">NeuCube</div>
+      <div style="color:#4a6a8a;font-size:9px;letter-spacing:0.12em;margin-bottom:6px">SNN CORE ENGINE</div>
+      <div style="font-size:9.5px;line-height:1.8;color:#6a9aba;text-align:center">
+        Spike Learning &middot; IGR<br>
+        <span style="color:#c87ae0aa">Native Interpretability</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOAL A -->
+  <div class="box goal-a">
+    <div class="goal-title" style="color:#e07878">GOAL A</div>
+    <div class="goal-sub" style="color:#c05050">Bayesian Diagnosis</div>
+    <div class="goal-body" style="border-bottom-color:#7a282844">
+      P(C | phase, geo)
+    </div>
+    <div class="goal-out">
+      <div style="color:#ff9090">&#8594; Diagnosis</div>
+      <div style="color:#ff9090">&#8596; Correlation</div>
+      <div style="color:#ff9090">&#8596; LOOCV</div>
+    </div>
+  </div>
+
+  <!-- GOAL B -->
+  <div class="box goal-b">
+    <div class="goal-title" style="color:#e0b840">GOAL B</div>
+    <div class="goal-sub" style="color:#c09830">Fuzzy EL</div>
+    <div class="goal-body" style="border-bottom-color:#7a5a0044">
+      &#956; &#8592; SNN output<br>
+      Ap/AE boundary<br>
+      EL_f = &#956; &times; Cost
+    </div>
+    <div class="goal-out">
+      <div style="color:#ffd060">&#8594; Fuzzy EL</div>
+      <div style="color:#ffd060">&#8594; Weather Effect</div>
+    </div>
+  </div>
+
+  <!-- GOAL C -->
+  <div class="box goal-c">
+    <div class="goal-title" style="color:#60d080">GOAL C</div>
+    <div class="goal-sub" style="color:#40a060">GIS Markov EL</div>
+    <div class="goal-body" style="border-bottom-color:#1a5a2844">
+      P(phase|site) &#8592; Spatial<br>
+      19 sites<br>
+      EL_m = P &times; Cost
+    </div>
+    <div class="goal-out">
+      <div style="color:#80f0a0">&#8594; Spatial EL</div>
+      <div style="color:#80f0a0">&#8594; Markov</div>
+    </div>
+  </div>
+
+  <!-- R_FINAL -->
+  <div class="box rfinal">
+    <div style="color:#c090f0;font-size:11px;font-weight:bold;letter-spacing:0.03em;margin-bottom:2px;line-height:1.3">COMPOSITE<br>RISK SCORE</div>
+    <div style="color:#6a40a0;font-size:9px;margin-bottom:6px">(EL_f + EL_m) / 2</div>
+
+    <!-- LDF LAYER -->
+    <div style="border:1px solid #7a40c088;border-radius:4px;background:#0f0820;padding:7px 8px;margin-bottom:6px">
+      <div style="color:#d090ff;font-size:9.5px;font-weight:bold;letter-spacing:0.08em;margin-bottom:2px">&times; LDF</div>
+      <div style="color:#8050b0;font-size:8.5px;line-height:1.6">
+        Operator &amp; vehicle<br>learning trajectory<br>
+        <span style="color:#6a40a0">Post-processing layer</span>
+      </div>
+    </div>
+
+    <!-- ARROW -->
+    <div style="text-align:center;color:#5a3080;font-size:11px;margin-bottom:5px">&#8595;</div>
+
+    <div style="color:#e8d8ff;font-size:11px;font-weight:bold;letter-spacing:0.08em;margin-bottom:1px">R_FINAL</div>
+    <div style="color:#c090f0;font-size:9px;margin-bottom:5px;letter-spacing:0.04em">&#8594; Risk Tier:</div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+      <div style="background:#1a5a2a;color:#60d080;font-size:8.5px;padding:2px 7px;border-radius:3px;border:1px solid #60d08044;font-weight:bold">Low</div>
+      <div style="background:#6a5000;color:#e0b840;font-size:8.5px;padding:2px 7px;border-radius:3px;border:1px solid #e0b84044;font-weight:bold">Medium</div>
+      <div style="background:#7a2000;color:#e07840;font-size:8.5px;padding:2px 7px;border-radius:3px;border:1px solid #e0784044;font-weight:bold">High</div>
+      <div style="background:#6a0808;color:#e04040;font-size:8.5px;padding:2px 7px;border-radius:3px;border:1px solid #e0404044;font-weight:bold">Critical</div>
+    </div>
+    <div style="border-top:1px solid #2a1860;padding-top:9px">
+      <div style="color:#c090f0;font-size:9.5px;line-height:1.7">SHAP</div>
+      <div style="color:#6a40a0;font-size:9px;margin-top:4px">3-Way Comparison</div>
+    </div>
+  </div>
+
+</div><!-- end container -->
+
+<!-- LINEAGE -->
+<div class="lineage">
+  <span style="color:#2a3a4a">LINEAGE: </span>
+  UFMB (Conference Paper)
+  <span style="color:#2a4a6a"> &#8594; </span>
+  NeuDen (SNN + Fuzzy, 2025)
+  <span style="color:#2a4a6a"> &#8594; </span>
+  <span style="color:#7eb8e2">NeuXPRISM</span>
+  <span style="color:#3a5a6a"> (SNN + Fuzzy + Markov + Bayesian + GIS + Space Weather)</span>
+</div>
+
+<script>
+(function() {
+  var canvas = document.getElementById("neucube");
+  var ctx = canvas.getContext("2d");
+  var W = canvas.width, H = canvas.height;
+
+  var groups = [
+    { g:"M", color:"#5ba3e0", count:18 },
+    { g:"G", color:"#5ed4a0", count:10 },
+    { g:"S", color:"#c87ae0", count:14 }
+  ];
+
+  var neurons = [];
+  groups.forEach(function(gr) {
+    for (var i = 0; i < gr.count; i++) {
+      var x, y, z, t = 0;
+      do {
+        x = (Math.random()-0.5)*2;
+        y = (Math.random()-0.5)*1.6;
+        z = (Math.random()-0.5)*2;
+        t++;
+      } while (x*x + y*y/0.64 + z*z > 1.05 && t < 120);
+      neurons.push({x:x, y:y, z:z, color:gr.color, g:gr.g});
+    }
+  });
+
+  var edges = [];
+  for (var i = 0; i < neurons.length; i++) {
+    for (var j = i+1; j < neurons.length; j++) {
+      var dx=neurons[i].x-neurons[j].x,
+          dy=neurons[i].y-neurons[j].y,
+          dz=neurons[i].z-neurons[j].z;
+      if (Math.sqrt(dx*dx+dy*dy+dz*dz) < 0.85 && Math.random() < 0.3)
+        edges.push([i,j]);
+    }
+  }
+
+  var spikes = [], lastSpike = 0, angle = 0;
+
+  function pr(x,y,z) {
+    var rx = x*Math.cos(angle) - z*Math.sin(angle);
+    var rz = x*Math.sin(angle) + z*Math.cos(angle);
+    var p  = 3.8/(3.8+rz+0.4);
+    var sc = Math.min(W,H)*0.36;
+    return {px:W/2+rx*sc*p, py:H/2+y*sc*p, z:rz, p:p};
+  }
+
+  function draw(ts) {
+    if (ts-lastSpike > 420 && spikes.length < 6) {
+      spikes.push({e:edges[Math.floor(Math.random()*edges.length)], t:0,
+                   sp:0.022+Math.random()*0.028});
+      lastSpike = ts;
+    }
+    ctx.clearRect(0,0,W,H);
+
+    edges.forEach(function(e) {
+      var a=pr(neurons[e[0]].x,neurons[e[0]].y,neurons[e[0]].z);
+      var b=pr(neurons[e[1]].x,neurons[e[1]].y,neurons[e[1]].z);
+      ctx.beginPath(); ctx.moveTo(a.px,a.py); ctx.lineTo(b.px,b.py);
+      ctx.strokeStyle = neurons[e[0]].g===neurons[e[1]].g
+        ? neurons[e[0]].color+"42" : "#ffffff11";
+      ctx.lineWidth=0.7; ctx.stroke();
+    });
+
+    for (var s=spikes.length-1; s>=0; s--) {
+      var sp=spikes[s];
+      var ni=sp.e[0], nj=sp.e[1];
+      var a=pr(neurons[ni].x,neurons[ni].y,neurons[ni].z);
+      var b=pr(neurons[nj].x,neurons[nj].y,neurons[nj].z);
+      var px=a.px+(b.px-a.px)*sp.t, py=a.py+(b.py-a.py)*sp.t;
+      var c=neurons[ni].color;
+      var g=ctx.createRadialGradient(px,py,0,px,py,5);
+      g.addColorStop(0,c+"ff"); g.addColorStop(1,c+"00");
+      ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2);
+      ctx.fillStyle=g; ctx.fill();
+      sp.t+=sp.sp;
+      if (sp.t>=1) spikes.splice(s,1);
+    }
+
+    var pts = neurons.map(function(n) {
+      var p=pr(n.x,n.y,n.z);
+      return {px:p.px, py:p.py, z:p.z, p:p.p, c:n.color};
+    }).sort(function(a,b){return a.z-b.z;});
+
+    pts.forEach(function(p) {
+      var r=Math.max(1.6, 4.2*p.p);
+      var g=ctx.createRadialGradient(p.px,p.py,0,p.px,p.py,r*2.8);
+      g.addColorStop(0,p.c+"cc"); g.addColorStop(1,p.c+"00");
+      ctx.beginPath(); ctx.arc(p.px,p.py,r*2.8,0,Math.PI*2);
+      ctx.fillStyle=g; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.px,p.py,r,0,Math.PI*2);
+      ctx.fillStyle=p.c; ctx.fill();
+    });
+
+    ctx.font="9px Georgia";
+    ctx.fillStyle="#5ba3e070"; ctx.fillText("Mission", W/2-78, H/2-65);
+    ctx.fillStyle="#5ed4a070"; ctx.fillText("Geo",     W/2+50, H/2+50);
+    ctx.fillStyle="#c87ae070"; ctx.fillText("Weather", W/2-30, H/2+74);
+
+    angle+=0.004;
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
