@@ -1,0 +1,20 @@
+Spaceport,Lat_Band,Coast_Cat,W_Liftoff,W_UpperStage,P_Liftoff_Baseline,P_Upper_Baseline,P_Liftoff_Adjusted,P_Upper_Adjusted
+Baikonur Cosmodrome,Mid-Latitude (35-55),Deep-Inland,0.5435,1.3834,0.2875,0.6125,0.1416,0.7678
+Plesetsk Cosmodrome,High-Latitude (55+),Near-Inland,0.692,1.3706,0.2875,0.6125,0.1748,0.7374
+Cape Canaveral / Kennedy Space Center,Subtropical (15-35),Coastal,1.3143,0.7558,0.2875,0.6125,0.4016,0.4921
+Vandenberg Space Force Base,Subtropical (15-35),Coastal,1.3143,0.7558,0.2875,0.6125,0.4016,0.4921
+Guiana Space Centre,Equatorial (0-15),Coastal,1.0434,0.7993,0.2875,0.6125,0.3372,0.5504
+Jiuquan Satellite Launch Center,Mid-Latitude (35-55),Deep-Inland,0.5435,1.3834,0.2875,0.6125,0.1416,0.7678
+Xichang Satellite Launch Center,Subtropical (15-35),Deep-Inland,0.598,1.1115,0.2875,0.6125,0.1805,0.7146
+Taiyuan Satellite Launch Center,Mid-Latitude (35-55),Deep-Inland,0.5435,1.3834,0.2875,0.6125,0.1416,0.7678
+Satish Dhawan Space Centre,Equatorial (0-15),Coastal,1.0434,0.7993,0.2875,0.6125,0.3372,0.5504
+Tanegashima Space Center,Subtropical (15-35),Coastal,1.3143,0.7558,0.2875,0.6125,0.4016,0.4921
+Rocket Lab Launch Complex 1,Mid-Latitude (35-55),Coastal,1.1944,0.9407,0.2875,0.6125,0.3368,0.5651
+Wallops Flight Facility,Mid-Latitude (35-55),Coastal,1.1944,0.9407,0.2875,0.6125,0.3368,0.5651
+Pacific Spaceport Complex,High-Latitude (55+),Coastal,1.776,0.8157,0.2875,0.6125,0.4599,0.45
+Omelek Island,Equatorial (0-15),Coastal,1.0434,0.7993,0.2875,0.6125,0.3372,0.5504
+Spaceport Kii,Subtropical (15-35),Coastal,1.3143,0.7558,0.2875,0.6125,0.4016,0.4921
+Pacific Missile Range Facility,Subtropical (15-35),Coastal,1.3143,0.7558,0.2875,0.6125,0.4016,0.4921
+Mojave Air and Space Port,Subtropical (15-35),Near-Inland,0.5121,1.2701,0.2875,0.6125,0.1436,0.7588
+Spaceport Cornwall,Mid-Latitude (35-55),Coastal,1.1944,0.9407,0.2875,0.6125,0.3368,0.5651
+Uchinoura Space Center,Subtropical (15-35),Coastal,1.3143,0.7558,0.2875,0.6125,0.4016,0.4921
